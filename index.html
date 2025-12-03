@@ -11,6 +11,7 @@
         font-family: Arial, sans-serif;
         text-align: center;
         padding-top: 80px;
+        margin: 0;
     }
 
     h1 {
@@ -21,6 +22,8 @@
         justify-content: center;
         gap: 25px;
         animation: fadeIn 1s ease-out;
+        margin: 0;
+        padding: 0;
     }
 
     .bomb {
@@ -45,11 +48,12 @@
 <body>
 
 <h1>
-    <img class="bomb" src="https://raw.githubusercontent.com/encharm/Font-Awesome-SVG-PNG/master/black/svg/bomb.svg">
+    <img class="bomb" src="bomb.svg">
     Available Bombs: <span id="value">...</span>
 </h1>
 
 <script>
+// LOAD VALUE FROM GOOGLE SHEETS
 function loadValue() {
     fetch("https://docs.google.com/spreadsheets/d/1Y3r9vDRmyAljI6FYTnNYzoBmKFoquwd4PxDEzlKUQ00/gviz/tq?tqx=out:json&sheet=WIP&range=B33")
       .then(r => r.text())
@@ -60,11 +64,13 @@ function loadValue() {
       })
       .catch((e) => {
         document.getElementById("value").innerText = "Error";
-        console.log(e);
+        console.log("Error loading value:", e);
       });
 }
 
 loadValue();
+
+// AUTO REFRESH EVERY 10 SECONDS
 setInterval(loadValue, 10000);
 </script>
 
