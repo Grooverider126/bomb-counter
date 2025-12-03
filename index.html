@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Available Bombs</title>
+
+<style>
+    body {
+        background: #0e1117;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding-top: 80px;
+    }
+
+    h1 {
+        font-size: 64px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .bomb {
+        width: 80px;
+        height: 80px;
+        animation: pulse 1.4s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+        0%   { transform: scale(1); }
+        50%  { transform: scale(1.12); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<h1>
+    <img class="bomb" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Cartoon_bomb.svg">
+    Available Bombs: <span id="value">...</span>
+</h1>
+
+<script>
+// LOAD VALUE FROM GOOGLE SHEETS
+function loadValue() {
+    fetch("https://docs.google.com/spreadsheets/d/1Y3r9vDRmyAljI6FYTnNYzoBmKFoquwd4PxDEzlKUQ00/gviz/tq?tqx=out:json&sheet=WIP&range=B33")
+      .then(r => r.text())
+      .then(text => {
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+        const value = json.table.rows[0].c[0].v;
+        document.getElementById("value").innerText = value;
+      })
+      .catch(() => {
+        document.getElementById("value").innerText = "Error";
+      });
+}
+
+loadValue();
+
+// AUTO REFRESH EVERY 10 SECONDS
+setInterval(loadValue, 10000);
+</script>
+
+</body>
+</html>
