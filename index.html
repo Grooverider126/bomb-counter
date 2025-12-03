@@ -45,12 +45,11 @@
 <body>
 
 <h1>
-    <img class="bomb" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Cartoon_bomb.svg">
+    <img class="bomb" src="https://raw.githubusercontent.com/encharm/Font-Awesome-SVG-PNG/master/black/svg/bomb.svg">
     Available Bombs: <span id="value">...</span>
 </h1>
 
 <script>
-// LOAD VALUE FROM GOOGLE SHEETS
 function loadValue() {
     fetch("https://docs.google.com/spreadsheets/d/1Y3r9vDRmyAljI6FYTnNYzoBmKFoquwd4PxDEzlKUQ00/gviz/tq?tqx=out:json&sheet=WIP&range=B33")
       .then(r => r.text())
@@ -59,14 +58,13 @@ function loadValue() {
         const value = json.table.rows[0].c[0].v;
         document.getElementById("value").innerText = value;
       })
-      .catch(() => {
+      .catch((e) => {
         document.getElementById("value").innerText = "Error";
+        console.log(e);
       });
 }
 
 loadValue();
-
-// AUTO REFRESH EVERY 10 SECONDS
 setInterval(loadValue, 10000);
 </script>
 
